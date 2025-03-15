@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="results-container">
+    <h2 class="mb-4">Search Results for: {{ session.get('topic', '') }}</h2>
+    
+    <div class="row">
+        <!-- Papers List -->
+        <div class="col-md-7">
+            {% for title, paper in session.get('papers', {}).items() %}
+            <div class="card mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">{{ title }}</h5>
+                    <p class="card-text text-muted">
+                        <strong>AI Summary:</strong> {{ generate_summary(paper['summary']) }}
+                    </p>
+                    <a href="{{ paper['pdf_url'] }}" class="btn btn-sm btn-outline-primary" target="_blank">
+                        View PDF
+                    </a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        <!-- Chat Interface -->
+        <div class="col-md-5">
+            <div class="chat-container">
+                <h4>Research Assistant</h4>
+                <div class="chat-messages">
+                    {% for msg in session.get('chat_history', []) %}
+                    <div class="message {{ 'user' if msg['role'] == 'user' else 'assistant' }}">
+                        {{ msg['content'] }}
+                    </div>
+                    {% endfor %}
+                </div>
+                <form method="POST" action="{{ url_for('chat') }}">
+                    <div class="input-group">
+                        <input type="text" class="form-control" name="message" 
+                               placeholder="Ask about the research..." required>
+                        <button class="btn btn-primary" type="submit">Send</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="search-container">
+    <h1 class="mb-4">Research Paper Explorer</h1>
+    {% if error %}
+        <div class="alert alert-danger">{{ error }}</div>
+    {% endif %}
+    <form method="POST">
+        <div class="input-group mb-3">
+            <input type="text" class="form-control" name="topic" 
+                   placeholder="Enter research topic (e.g., 'quantum computing')" required>
+            <button class="btn btn-primary" type="submit">Search</button>
+        </div>
+    </form>
+</div>
+{% endblock %}

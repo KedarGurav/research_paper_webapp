@@ -1,0 +1,7 @@
+flask
+python-dotenv
+arxiv
+nltk
+langchain-google-genai
+langchain
+flask_limiter
